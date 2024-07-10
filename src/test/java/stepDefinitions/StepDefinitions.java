@@ -17,6 +17,7 @@ public class StepDefinitions {
     QueryManage queryManage = new QueryManage(); //obje olusturduk
     String query;
     ResultSet resultSet;
+    int rowCount;
 
     @Given("The database connection is created.")
     public void the_database_connection_is_created() {
@@ -60,7 +61,7 @@ public class StepDefinitions {
         while(resultSet.next()) {
             String isim = resultSet.getString("name");
             isimler.add(isim);
-            // isimler listesine 60. satırdan gelen ismi ekle. Bitene kadar while calısır
+            // isimler listesine 62. satırdan gelen ismi ekle. Bitene kadar while calısır
         }
         List<String> expectedName = new ArrayList<>();
         expectedName.add("5 Minutes");
@@ -96,6 +97,38 @@ public class StepDefinitions {
         assertEquals(expectedName,actualName);
         System.out.println("expected= " + expectedName);
         System.out.println("actual= " + actualName);
+
+    }
+    // ------------------query04-----------------
+    @Given("Query04 is prepared and executed")
+    public void query04_is_prepared_and_executed() throws SQLException {
+        query = queryManage.getQuery04();
+       resultSet =JDBCReusableMethods.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet04 is proceed.")
+    public void result_set04_is_proceed() throws SQLException {
+        // sonuçları yazdırmamız lazım
+        while(resultSet.next()){
+            String kullanici_id = resultSet.getString("user_id");
+            String browserOS = resultSet.getString("browser_os");
+
+            System.out.println("kullanici_id " + kullanici_id);
+            System.out.println("Browser & OS " + browserOS);
+    }
+    }
+    // ----------------------QUERY(05) (statement ile) ---------------------------
+    @Given("Update Query05 is prepared and executed.")
+    public void query05_is_prepared_and_executed() throws SQLException {
+        query = queryManage.getUpdatequery05();
+         rowCount = JDBCReusableMethods.updateQuery(query);
+        // rowCount yapılan degisiklikten kac satir etkilenmis ona bakarız
+
+    }
+    @Given("ResultSet05 is processed.")
+    public void result_set05_is_processed() throws Exception {
+        int expectedRowCount = 18;
+        assertEquals(expectedRowCount, rowCount);
+        //yukarda row counta atamıstık ya actual degeri icinde tutuyor zaten
 
     }
 }

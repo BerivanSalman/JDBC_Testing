@@ -35,7 +35,9 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="6a40436e-51ee-4fd3-b4d9-36b0d735be1e">
-      <console name="qaloantech" type="STANDARD" schema="" session="Main"><![CDATA[Select firstname, lastname from users where id=11 and country_code!='TR';]]></console>
+      <console name="qaloantech" type="STANDARD" schema="" session="Main"><![CDATA["users" tablosunda sondan bir önceki harfi e olan
+    "usernamelerin" "mobile" numarasını update ediniz.
+Update users Set Where username like "%e_"]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
