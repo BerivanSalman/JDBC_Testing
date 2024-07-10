@@ -30,6 +30,12 @@ public class JDBC_Testing {
         // 3. ADIM: SQL QUERY'LERI OLUSTUR
         String query = "SELECT * FROM u168183796_qaloantec.users";
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        /*
+        ResultSet.TYPE_SCROLL_INSENSITIVE: Bu, ResultSet nesnesinin kaydırılabilir olduğunu belirtir,
+        yani sonuç kümesindeki satırlar arasında ileri ve geri hareket edilebilir. Ayrıca, temel veri değişikliklerinden etkilenmez,
+         yani veri değiştirildiğinde ResultSet içindeki veriler değişmez. ResultSet.CONCUR_READ_ONLY: Bu, ResultSet nesnesinin salt okunur olduğunu
+         belirtir. Bu durumda, ResultSet üzerinden veritabanındaki veriler değiştirilemez.
+         */
 
         // Statement olusturmak icin mutlaka bir connection olmasi gerekli.
         // create edilen statement bir query calistirilacaksa atama yapilmadan kullanilabilir.
@@ -39,17 +45,13 @@ public class JDBC_Testing {
         // 4. ADIM: QUERY EXECUTE ET
       /*
       statement.executeQuery(query);
-
       connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-
         Yukaridaki iki ifade de aynidir.
        */
-
         ResultSet resultSet = statement.executeQuery(query);
 
         // 5. ADIM: SONUCLARI ISLE
-
-
+        //iterator üzerinden atladıgını bize getirir
         resultSet.next();  // iterator'i ilk satira koymus olduk
         System.out.println(resultSet.getString("firstname"));
         // Mehmet
