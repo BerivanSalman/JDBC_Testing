@@ -36,16 +36,19 @@
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="6a40436e-51ee-4fd3-b4d9-36b0d735be1e">
       <console name="qaloantech" type="STANDARD" schema="" session="Main"><![CDATA[--"id=?" olan kullanıcının "is_read=0" olan bildirimlerini '1' Olarak Update edip doğrulayınız.
-Update admin_notifications Set is_read = ? Where id = ?;]]></console>
+update admin_notifications set is_read = ? where id = ?;
+--  "support_attachments" tablosunda "support_message_id=?"
+--  değerine göre  bir dosyayı siliniz ve silindiğini doğrulayınız.
+select * from support_attachments;
+Insert into support_attachments (id, support_message_id, attachment, created_at) values (?,?,?,?);
+Delete support_message_id from  support_attachments]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="6a40436e-51ee-4fd3-b4d9-36b0d735be1e" object-ref="schemas/u168183796_qaloantec/tables/users" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="6a40436e-51ee-4fd3-b4d9-36b0d735be1e" />

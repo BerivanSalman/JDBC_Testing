@@ -28,13 +28,15 @@ Feature: Update , Delete, Insert QUERY
     * preparedResultSet07 is processed.
     * The database connection is closed.
   @query09
+    # once insert sonra delete yapariz.
+  # Insert isleminde daha dinamik olmasi icin Faker class'ina deger urettiririz.
+  # Insert ettigimiz faker degerlerine sahip datayi yine faker degerlerini alarak delete ederiz.
   Scenario: "update_logs" tablosunda "version=? " ve "id=?" olan datanın "update_log"
   değerini update edip doğrulayınız.
     * Update_logs tablosuna insert query hazirlanir ve calistirilir.
     * update_logs tablosuna insert edilen datanin update log degeri degistirilir
     * update log degerinin degistigi dogrulanir
     * The database connection is closed.
-
   @query10
   Scenario: Update_logs tablosunda "id=?" değerine göre
   bir datayı siliniz ve silindiğini doğrulayınız.
@@ -43,3 +45,10 @@ Feature: Update , Delete, Insert QUERY
     * update_logs tablosuna insert edilen data silinir.
     * Satirin silindigi dogrulanir
     * The database connection is closed.
+    @query11
+  Scenario: "support_attachments" tablosunda "support_message_id=?"
+  değerine göre  bir dosyayı siliniz ve silindiğini doğrulayınız.
+      * support_attachments tablosuna insert query hazirlanir ve calistirilir.
+      * support_attachments tablosuna insert edilen data silinir.
+      * Satirin silindigi dogrulanir
+

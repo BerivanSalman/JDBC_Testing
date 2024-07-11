@@ -23,5 +23,3 @@ browser ve os leri gruplayip ekrana yazdiriniz
     * Query04 is prepared and executed
     * ResultSet04 is proceed.
     * The database connection is closed.
-    @query05
-    Scenario:

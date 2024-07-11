@@ -29,6 +29,9 @@ public class StepDefinitions {
     String version;
     String updateLog;
     int supportMessageID;
+    int support_message_id;
+    String attachment;
+
 
     @Given("The database connection is created.")
     public void the_database_connection_is_created() {
@@ -250,6 +253,36 @@ public class StepDefinitions {
     @Given("Satirin silindigi dogrulanir")
     public void satirin_silindigi_dogrulanir() {
         assertEquals(1,rowCount);
+    }
+    // -----------------------QUERY(10) (Prepared Statement)--------
+    @Given("support_attachments tablosuna insert query hazirlanir ve calistirilir.")
+    public void support_attachments_tablosuna_insert_query_hazirlanir_ve_calistirilir() throws SQLException {
+        //  private String preparedQuery10Insert= "INSERT INTO support_attachments (id, support_message_id, attachment, created_at) VALUES(?, ?, ?, ?)";
+        query = queryManage.getPreparedQuery10Insert();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        id = faker.number().numberBetween(50,500);
+        support_message_id = faker.number().numberBetween(100,400);
+
+
+
+        preparedStatement.setInt(1,id);
+        preparedStatement.setInt(2,support_message_id);
+        preparedStatement.setString(3,"658401a61409c1703149990.png");
+        preparedStatement.setDate(4, Date.valueOf(LocalDate.now()));
+        rowCount = preparedStatement.executeUpdate();
+        System.out.println("id:  "+ id);
+        System.out.println("supportMessageID:  "+ supportMessageID);
+
+    }
+    @Given("support_attachments tablosuna insert edilen data silinir.")
+    public void support_attachments_tablosuna_insert_edilen_data_silinir() throws SQLException {
+        // private String preparedQuery10Delete= "Delete from u168183796_qaloantec.support_attachments where support_message_id = ?";
+        query = queryManage.getPreparedQuery10Delete();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        preparedStatement.setInt(1,support_message_id);
+        rowCount = preparedStatement.executeUpdate();
+        System.out.println("silinen datanin support message id'si : " + supportMessageID);
+
     }
 
 
