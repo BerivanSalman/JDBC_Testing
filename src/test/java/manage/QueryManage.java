@@ -12,6 +12,7 @@ public class QueryManage {
     private String preparedQuery07 = "Update admin_notifications Set is_read = ? Where id = ?";
     private String preparedQuery08Insert = "insert into update_logs (id,version,update_log,created_at) values(?,?,?,?)";
     private String preparedQuery08Update = "UPDATE update_logs set update_log = ? Where version = ? and id = ?";
+    private String preparedQuery09Delete= "DELETE FROM u168183796_qaloantec.update_logs WHERE id=?";
 
 
 
@@ -26,6 +27,5 @@ public class QueryManage {
     public String getPreparedQuery07() {return preparedQuery07;}
     public String getPreparedQuery08Update() {return preparedQuery08Update;}
     public String getPreparedQuery08Insert() {return preparedQuery08Insert;}
-
-
+    public String getPreparedQuery09Delete() {return preparedQuery09Delete;}
 }

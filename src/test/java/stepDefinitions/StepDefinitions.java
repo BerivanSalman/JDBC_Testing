@@ -191,7 +191,7 @@ public class StepDefinitions {
     public void prepared_result_set07_is_processed() {
         assertEquals(1,rowCount);
     }
-
+    // -----------------------QUERY(08) (Prepared Statement)--------
     @Given("Update_logs tablosuna insert query hazirlanir ve calistirilir.")
     public void update_logs_tablosuna_insert_query_hazirlanir_ve_calistirilir() throws SQLException {
         //private String preparedQuery08Insert = "insert into update_logs (id,version,update_log,created_at) values(?,?,?,?)";
@@ -236,6 +236,19 @@ public class StepDefinitions {
     }
     @Given("update log degerinin degistigi dogrulanir")
     public void update_log_degerinin_degistigi_dogrulanir() {
+        assertEquals(1,rowCount);
+    }
+    // -----------------------QUERY(09) (Prepared Statement)--------
+    @Given("update_logs tablosuna insert edilen data silinir.")
+    public void update_logs_tablosuna_insert_edilen_data_silinir() throws SQLException {
+        query = queryManage.getPreparedQuery09Delete();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        preparedStatement.setInt(1,id);
+        rowCount = preparedStatement.executeUpdate();
+        System.out.println("silinen id; "+ id);
+    }
+    @Given("Satirin silindigi dogrulanir")
+    public void satirin_silindigi_dogrulanir() {
         assertEquals(1,rowCount);
     }
 

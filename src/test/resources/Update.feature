@@ -34,3 +34,12 @@ Feature: Update , Delete, Insert QUERY
     * update_logs tablosuna insert edilen datanin update log degeri degistirilir
     * update log degerinin degistigi dogrulanir
     * The database connection is closed.
+
+  @query10
+  Scenario: Update_logs tablosunda "id=?" değerine göre
+  bir datayı siliniz ve silindiğini doğrulayınız.
+
+    * Update_logs tablosuna insert query hazirlanir ve calistirilir.
+    * update_logs tablosuna insert edilen data silinir.
+    * Satirin silindigi dogrulanir
+    * The database connection is closed.
