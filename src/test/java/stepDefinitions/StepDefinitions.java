@@ -194,6 +194,9 @@ public class StepDefinitions {
 
     @Given("Update_logs tablosuna insert query hazirlanir ve calistirilir.")
     public void update_logs_tablosuna_insert_query_hazirlanir_ve_calistirilir() throws SQLException {
+        //private String preparedQuery08Insert = "insert into update_logs (id,version,update_log,created_at) values(?,?,?,?)";
+        //Faker dan rastgele degerler ürettirdik cünkü herkes ayni parojede çalışırken sorun olmasin diye.
+        // Herkes aynı anda aynİ degeri değistirip silerse sorun olur
         query= queryManage.getPreparedQuery08Insert();
         preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
         id = faker.number().numberBetween(450,550);
@@ -206,22 +209,20 @@ public class StepDefinitions {
         preparedStatement.setDate(4, Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
 
-
         System.out.println("updateLOG: "+ updateLog);
         System.out.println("version: "+ version);
         System.out.println("id: "+ id);
-
-
         int flag=0;
         if (rowCount > 0) {
             flag++;
         }
-
         rowCount = 0;
         assertEquals(1, flag);
     }
+
     @Given("update_logs tablosuna insert edilen datanin update log degeri degistirilir")
     public void update_logs_tablosuna_insert_edilen_datanin_update_log_degeri_degistirilir() throws SQLException {
+        // private String preparedQuery08Update = "UPDATE update_logs set update_log = ? Where version = ? and id = ?";
         query= queryManage.getPreparedQuery08Update();
         String updatelogYeni = "yeni log"; // faker dan gelen insert degerini yeni log olarak degistirmek istiyorum.
 
