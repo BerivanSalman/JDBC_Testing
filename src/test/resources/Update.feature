@@ -9,3 +9,10 @@ Feature: Update , Delete, Insert QUERY
       * Update Query05 is prepared and executed.
       * ResultSet05 is processed.
       * The database connection is closed.
+  @query06
+  Scenario: "users" tablosunda sondan bir önceki harfi e olan
+  "usernamelerin" "mobile" numarasını update ediniz.
+
+    * Update Query06 is prepared and executed.
+    * ResultSet06 is processed.
+    * The database connection is closed.

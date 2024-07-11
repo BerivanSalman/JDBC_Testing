@@ -5,6 +5,7 @@ import manage.QueryManage;
 import org.junit.Assert;
 import utilities.JDBCReusableMethods;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class StepDefinitions {
     QueryManage queryManage = new QueryManage(); //obje olusturduk
     String query;
     ResultSet resultSet;
+    PreparedStatement preparedStatement;
     int rowCount;
 
     @Given("The database connection is created.")
@@ -130,5 +132,19 @@ public class StepDefinitions {
         assertEquals(expectedRowCount, rowCount);
         //yukarda row counta atamıstık ya actual degeri icinde tutuyor zaten
 
+    }
+    // -----------------------QUERY(06) (Prepared Statement)--------
+    @Given("Update Query06 is prepared and executed.")
+    public void update_query06_is_prepared_and_executed() throws SQLException {
+        query = queryManage.getPreparedquery05();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);// sen bu prepared statementi query ile birlikte calistir
+        preparedStatement.setInt(1,4444444); // querydeki 1. soru işareti için
+        preparedStatement.setString(2, "%e_"); // querydeki 2. soru işareti için
+        //yukarda hazırladık aşagıda da preparedStatement.executeUpdate(); ile queryimizi göndereceğiz
+        rowCount = preparedStatement.executeUpdate();
+    }
+    @Given("ResultSet06 is processed.")
+    public void result_set06_is_processed() {
+        assertEquals(18, rowCount);
     }
 }
