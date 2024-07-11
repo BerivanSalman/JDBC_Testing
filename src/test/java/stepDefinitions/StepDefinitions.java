@@ -1,13 +1,16 @@
 package stepDefinitions;
 
+import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import manage.QueryManage;
 import org.junit.Assert;
 import utilities.JDBCReusableMethods;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,12 @@ public class StepDefinitions {
     ResultSet resultSet;
     PreparedStatement preparedStatement;
     int rowCount;
+    Faker faker= new Faker();
+
+    int id;
+    String version;
+    String updateLog;
+    int supportMessageID;
 
     @Given("The database connection is created.")
     public void the_database_connection_is_created() {
@@ -133,18 +142,102 @@ public class StepDefinitions {
         //yukarda row counta atamıstık ya actual degeri icinde tutuyor zaten
 
     }
-    // -----------------------QUERY(06) (Prepared Statement)--------
-    @Given("Update Query06 is prepared and executed.")
+    // -----------------------QUERY(05) (Prepared Statement)--------
+    @Given("Update preparedQuery05 is prepared and executed.")
     public void update_query06_is_prepared_and_executed() throws SQLException {
         query = queryManage.getPreparedquery05();
-        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);// sen bu prepared statementi query ile birlikte calistir
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        // sen bu prepared statementi query ile birlikte calistir. PreparedStatement, SQL sorgularını önceden derleyip saklar
+        // ve bu sayede performansı artırır
+        // ve SQL enjeksiyon saldırılarına karşı güvenliği artırır.
         preparedStatement.setInt(1,4444444); // querydeki 1. soru işareti için
         preparedStatement.setString(2, "%e_"); // querydeki 2. soru işareti için
         //yukarda hazırladık aşagıda da preparedStatement.executeUpdate(); ile queryimizi göndereceğiz
         rowCount = preparedStatement.executeUpdate();
     }
-    @Given("ResultSet06 is processed.")
+    @Given("preparedResultSet05 is processed.")
     public void result_set06_is_processed() {
         assertEquals(18, rowCount);
     }
+    // -----------------------QUERY(06) (Prepared Statement)--------
+    @Given("Update preparedQuery06 is prepared and executed.")
+    public void update_prepared_query06_is_prepared_and_executed() throws SQLException {
+      query = queryManage.getPreparedQuery06();
+      preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        // INSERT INTO admin_password_resets (id,email,token,status) VALUES (?,?,?,?);
+        preparedStatement.setInt(1,1090);
+        preparedStatement.setString(2,"email53@gmail.com");
+        preparedStatement.setString(3,"128478");
+        preparedStatement.setInt(4,1);
+        rowCount = preparedStatement.executeUpdate(); // yukardaki değişikliği yaptıktan sonra queryi gonderiyoruz
+        // ve sonuc olarak bize dönen etkilenen satır sayisini rowCounta atarız
+    }
+    @Given("preparedResultSet06 is processed.")
+    public void prepared_result_set06_is_processed() {
+        assertEquals(1,rowCount);
+    }
+    // -----------------------QUERY(07) (Prepared Statement)--------
+    @Given("Update preparedQuery07 is prepared and executed.")
+    public void update_prepared_query07_is_prepared_and_executed() throws SQLException {
+        query = queryManage.getPreparedQuery07();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        // "Update admin_notifications Set is_read = ? Where id = ?";
+        preparedStatement.setInt(1,1);
+        preparedStatement.setInt(2,773);
+        rowCount = preparedStatement.executeUpdate();
+
+    }
+    @Given("preparedResultSet07 is processed.")
+    public void prepared_result_set07_is_processed() {
+        assertEquals(1,rowCount);
+    }
+
+    @Given("Update_logs tablosuna insert query hazirlanir ve calistirilir.")
+    public void update_logs_tablosuna_insert_query_hazirlanir_ve_calistirilir() throws SQLException {
+        query= queryManage.getPreparedQuery08Insert();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        id = faker.number().numberBetween(450,550);
+        version = faker.options().option("Windows 10", "MacOs Ventura", "LinUx");
+        updateLog = faker.lorem().sentence(1); // insert deger
+
+        preparedStatement.setInt(1,id);
+        preparedStatement.setString(2,version);
+        preparedStatement.setString(3,updateLog);
+        preparedStatement.setDate(4, Date.valueOf(LocalDate.now()));
+        rowCount = preparedStatement.executeUpdate();
+
+
+        System.out.println("updateLOG: "+ updateLog);
+        System.out.println("version: "+ version);
+        System.out.println("id: "+ id);
+
+
+        int flag=0;
+        if (rowCount > 0) {
+            flag++;
+        }
+
+        rowCount = 0;
+        assertEquals(1, flag);
+    }
+    @Given("update_logs tablosuna insert edilen datanin update log degeri degistirilir")
+    public void update_logs_tablosuna_insert_edilen_datanin_update_log_degeri_degistirilir() throws SQLException {
+        query= queryManage.getPreparedQuery08Update();
+        String updatelogYeni = "yeni log"; // faker dan gelen insert degerini yeni log olarak degistirmek istiyorum.
+
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        preparedStatement.setString(1,updatelogYeni);
+        preparedStatement.setString(2,version);
+        preparedStatement.setInt(3,id);
+        rowCount = preparedStatement.executeUpdate();
+
+        System.out.println("id: "+id);
+    }
+    @Given("update log degerinin degistigi dogrulanir")
+    public void update_log_degerinin_degistigi_dogrulanir() {
+        assertEquals(1,rowCount);
+    }
+
+
+
 }
