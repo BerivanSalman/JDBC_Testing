@@ -40,7 +40,7 @@ public class StepDefinitions {
     }
     @Given("Query01 is prepared and executed.")
     public void is_prepared_and_executed(String string) throws SQLException {
-        query = queryManage.getQuery01(); // query mizi query manage dosyasından aldık
+        query = queryManage.getQuery01(); // query mizi query manage file ından aldık
         resultSet = JDBCReusableMethods.getStatement().executeQuery(query); // bu cağırdıgımız queryi execute ederiz ve bu bir Select sorgusu oldugu için resultSet dondurur.
         //Update, delete vs sorgusu olsaydı 'int ' yazardik buraya
     }
