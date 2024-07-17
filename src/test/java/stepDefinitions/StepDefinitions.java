@@ -282,9 +282,5 @@ public class StepDefinitions {
         preparedStatement.setInt(1,support_message_id);
         rowCount = preparedStatement.executeUpdate();
         System.out.println("silinen datanin support message id'si : " + supportMessageID);
-
     }
-
-
-
 }
