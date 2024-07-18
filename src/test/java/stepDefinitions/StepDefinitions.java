@@ -162,6 +162,7 @@ public class StepDefinitions {
     public void result_set06_is_processed() {
         assertEquals(18, rowCount);
     }
+
     // -----------------------QUERY(06) (Prepared Statement)--------
     @Given("Update preparedQuery06 is prepared and executed.")
     public void update_prepared_query06_is_prepared_and_executed() throws SQLException {

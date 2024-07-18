@@ -1,6 +1,7 @@
 import java.sql.*;
 
 public class JDBC_Testing {
+    //Veritabanı bağlantılarını her seferinde kapatmak, hem sistem performansı hem de veri güvenliği açısından önemlidir.
 
     // Sizden JDBC sorgusu yapmaniz istendiginde yapacaginiz ilk is:
     // DataBase Yoneticisi ile iletisime gecerek Access Information'lari edinmek.
